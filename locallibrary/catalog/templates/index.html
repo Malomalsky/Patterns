@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Домашняя страница Библиотеки</h1>
+  <p>Добро пожаловать на LocalLibrary, сайт сделан при поддержке <em>Mozilla Developer Network</em>!</p>
+  <h2>Динамический контент</h2>
+  <p>Библиотека имеет следующее количество записей:</p>
+  <ul>
+    <li><strong>Книги:</strong> {{ num_books }}</li>
+    <li><strong>Копии:</strong> {{ num_instances }}</li>
+    <li><strong>Доступные копии:</strong> {{ num_instances_available }}</li>
+    <li><strong>Авторы:</strong> {{ num_authors }}</li>
+  </ul>
+  <p>Вы посещали эту страницу {{num_visits }} раз(а)</p>
+{% endblock %}
