@@ -97,12 +97,64 @@
  
  ### Совместная работа
  
+ [Source](https://github.com/Malomalsky/Patterns/blob/master/fm_builder.py)
+ 
  **Фабричный метод**  - сначала объявляется абстрактный создатель. От него наследуются два конкретных - **ShipCreator** и **TruckCreator**. Каждый из создателей пораждает объект класса **Корабль** и **Грузовик** соответственно, при этом логируя информацию о создании в [базу данных SQLite](https://github.com/Malomalsky/Patterns/blob/master/db.sqlite). Далее объявляется абстрактный класс **Product**, и от него наследуются два конкретных продукта - **Ship** и **Truck**
  
 **Строитель** - объявляем абстрактного билдера, затем наследуем от него **ConcreteBuilder1**. Данный класс имеет методы **produce_part_a**, в котором задается техническая информация письма (адресат, отправитель и прочее), и **produce_part_b**, в котором составляется основная часть письма (делается запрос к БД, формируется отчет о количестве созданных объектов с рекомендацией).
 
 Программа выполняет 100 итераций, где каждую итерацию рандомно создается либо корабль, либо грузовик, а каждую 30 итерацию билдером формируется и отправляется письмо из логов с рекомендацией. 
 
+***
+
+## Практическая работа 4. Цепочка обязанностей и делегация полномочий.
+
+### Цепочка обязанностей
+
+**Тип** Поведенческий
+
+**Суть** 
+
+Избегает связывания отправителя запроса с его получателем, давай возможность обработать запрос более чем одному объекту. Связывает объекты-получатели и передает запро по цепочке пока объект не обработает его. 
+
+**Как работает в моей работе** 
+
+Пользователь формирует покупательскую [корзину](https://github.com/Malomalsky/Patterns/blob/master/cli.py), затем начинается работа **цепочки обязанностей**. В ней мы сначала обьявляем класс **Handler** с методом построения цепочки обработчиков. Далее объявляем AbstractHandler и конкретных обработчиков - BagHandler, CourierHandler, AirHandler. Каждый обработчик обрабатывает конкретные товары. Затем, как пользователь сформировал корзину, начинается процесс обработки, и контекст показывает, какой товар как доставляется, исходя из заданной цепочки. 
 
 
+### Делегация полномочий
+
+**Тип** Поведенческий
+
+**Суть** 
+
+
+Объект внешне выражает некоторое поведение, но в реальности передаёт ответственность за выполнение этого поведения связанному объекту. Шаблон делегирования является фундаментальной абстракцией, на основе которой реализованы другие шаблоны - композиция (также называемая агрегацией), примеси (mixins) и аспекты (aspects). 
+
+###
+
+## Практическая работа 5. MVC/MVVM 
+
+Model-View-Controller (MVC, «Модель-Представление-Контроллер», «Модель-Вид-Контроллер») — схема разделения данных приложения, пользовательского интерфейса и управляющей логики на три отдельных компонента: модель, представление и контроллер — таким образом, что модификация каждого компонента может осуществляться независимо.
+
+* Модель (Model) предоставляет данные и реагирует на команды контроллера, изменяя своё состояние.
+* Представление (View) отвечает за отображение данных модели пользователю, реагируя на изменения модели.
+* Контроллер (Controller) интерпретирует действия пользователя, оповещая модель о необходимости изменений.
+
+В моем [примере](https://github.com/Malomalsky/Patterns/tree/master/locallibrary) модель MVC реализуется на базе фреймворка Django. Говорят они о себе так:
+> Django appears to be a MVC framework, but you call the Controller the “view”, and the View the “template”. How come you don’t use the standard names?¶
+
+> Well, the standard names are debatable.
+
+> In our interpretation of MVC, the “view” describes the data that gets presented to the user. It’s not necessarily how the data looks, but which data is presented. The view describes which data you see, not how you see it. It’s a subtle distinction.
+
+> So, in our case, a “view” is the Python callback function for a particular URL, because that callback function describes which data is presented.
+
+> Furthermore, it’s sensible to separate content from presentation – which is where templates come in. In Django, a “view” describes which data is presented, but a view normally delegates to a template, which describes how the data is presented.
+
+> Where does the “controller” fit in, then? In Django’s case, it’s probably the framework itself: the machinery that sends a request to the appropriate view, according to the Django URL configuration.
+
+> If you’re hungry for acronyms, you might say that Django is a “MTV” framework – that is, “model”, “template”, and “view.” That breakdown makes much more sense.
+
+> At the end of the day, of course, it comes down to getting stuff done. And, regardless of how things are named, Django gets stuff done in a way that’s most logical to us.
 
